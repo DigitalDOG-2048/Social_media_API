@@ -1,3 +1,3 @@
-const app = require('/.app');
-let port = porcess.env.PORT || 3000;
+const app = require('./app');
+let port = process.env.PORT || 3000;
 app.listen(port);
