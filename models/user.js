@@ -85,3 +85,9 @@ exports.login = async function login(ctx) {
   }
 }
 
+exports.getAllUser = async function getAllUser(ctx) {
+  const query = "SELECT * FROM users";
+  const result = await db.sql_query(query);
+  ctx.body = result;
+}
+
