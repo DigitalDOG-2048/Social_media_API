@@ -6,6 +6,8 @@ exports.sql_query = async function sql_query(query, values) {
     const connection = await mysql.createConnection(info.config);
     const data = await connection.query(query, values);
     await connection.end();
+    console.error(query, values)
+    console.log('datebase mondified.')
     return data;
   }
   catch (error) {

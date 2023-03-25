@@ -1,11 +1,9 @@
 const db = require('../helper/database')
 
 exports.getAllPost = async function getAllPost(ctx) {
-    const query = "SELECT * FROM posts"
+    const query = "SELECT * FROM posts";
     const result = await db.sql_query(query);
-    ctx.body = {
-        result
-    };
+    ctx.body = result;
 }
 
 exports.addPost = async function addPost(ctx) {
@@ -23,7 +21,7 @@ exports.addPost = async function addPost(ctx) {
 exports.deletePost = async function deletePost(ctx) {
     const id = ctx.params.id;
     const query = "DELETE FROM posts WHERE id = ?";
-    const result = await db.sql_query(query, id);
+    await db.sql_query(query, id);
     ctx.status = 500
     ctx.body = {
         id: id,
