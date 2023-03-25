@@ -1,8 +1,11 @@
 const Koa = require('koa');
 const cors = require('@koa/cors');
+const jwt = require('koa-jwt');
 const app = new Koa();
 
 app.use(cors());
+
+//app.use(jwt({secret: 'secretkey', cookies:, debug: true}).unless({ path: [/login/] }));
 
 const user = require('./routes/user.js');
 const post = require('./routes/post.js');
