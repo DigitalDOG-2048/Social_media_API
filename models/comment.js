@@ -1,7 +1,7 @@
 const db = require('../helper/database')
 
 exports.getComment = async function getComment(ctx) {
-    const id = ctx.params.id;
+    const id = ctx.params.postId;
     const query = "SELECT * FROM comments WHERE postID = ?";
     const result = await db.sql_query(query, id);
     ctx.body = result;
