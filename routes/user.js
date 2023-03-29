@@ -7,9 +7,11 @@ const router =Router({prefix: prefix});
 
 const user = require('../models/user');
 
-router.get('/', auth, user.getAllUser);
+router.get('/', user.getAllUser);
 router.post('/register', bodyParser(), user.register);
 router.post('/login', bodyParser(), user.login)
-router.post('/logout', auth, user.logout)
+router.post('/logout', user.logout)
+router.put('/update/:userId([0-9]{1,})', bodyParser(), user.update);
+router.del('/delete/:userId([0-9]{1,})', user.deleteUser)
 
 module.exports = router;

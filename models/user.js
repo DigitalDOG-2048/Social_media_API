@@ -1,6 +1,7 @@
 const db = require('../helper/database')
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+
 
 
 const checkUsernameExist = async function (username) {
@@ -33,7 +34,7 @@ exports.register = async function register(ctx) {
   }
 }
 
-exports.login = async function login(ctx) {
+exports.login = async function login(ctx, next) {
   const body = ctx.request.body;
   const query = "SELECT * FROM users WHERE username = ?"
   try {
@@ -42,16 +43,16 @@ exports.login = async function login(ctx) {
     if (result.length) {
       const checkPassword = bcrypt.compareSync(body.password, result[0].password)
       if (checkPassword) {
+        const id = result[0].id;
+        //console.log(ctx.state.userid);
+        const links = `${ctx.protocol}://${ctx.host}${ctx.request.path}/${id}`
         const token = jwt.sign({ ID: result[0].id }, "secretkey", { expiresIn: '1d' })
         console.log(`Successfully authenticated user ${body.username}. token issused`,)
+        const { password,registeredDate,modifiedDate, ...user} = result[0]
         ctx.cookies.set("Token", token, { httpOnly: true });
         //console.log(ctx.cookies.get("Token"))
         ctx.status = 200;
-        ctx.body = {
-          ID: result[0].id,
-          name: result[0].name,
-          token
-        }
+        ctx.body = {user, self:links}
       }
       else {
         console.log(`Incorrect password entered for ${body.username}`)
@@ -75,6 +76,7 @@ exports.login = async function login(ctx) {
       Message: "Something went wrong"
     }
   }
+  await next()
 }
 
 exports.getAllUser = async function getAllUser(ctx) {
@@ -97,8 +99,43 @@ exports.logout = async function logout(ctx) {
   ctx.cookies.set("Token", '', { httpOnly: false });
   ctx.status = 204;
   ctx.body = {
-    Message: "YYou have logged out"
+    Message: "You have logged out"
   }
 
+}
+
+exports.update = async function update (ctx) {
+  const body = ctx.request.body;
+  const id = ctx.params.userId;
+  const query = "UPDATE users SET ? WHERE ID = ?;";
+
+  if (ctx.password) {
+    const password = user.password;
+    const hash = bcrypt.hashSync(password, 10);
+    user.password = hash;  
+  }
+  try{
+    await db.sql_query(query, [body, id]);
+    ctx.status = 201;
+    ctx.body = {
+      Message: "You have update your account"
+    };
+  }catch(error){
+    ctx.body = error;
+  };
+};
+
+exports.deleteUser = async function deleteUser (ctx){
+  const id = ctx.params.userId;
+  const query = "DELETE FROM users WHERE id = ?";
+  try{
+    await db.sql_query(query, id)
+    ctx.status = 200;
+    ctx.body = {
+      Message: "Your have deleted your account"
+    }
+  }catch(error){
+    ctx.body = error;
+  }
 }
 
