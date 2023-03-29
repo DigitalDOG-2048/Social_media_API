@@ -8,7 +8,8 @@ const router = Router({ prefix: prefix });
 const post = require('../models/post');
 
 router.get('/get', post.getAllPost)
-router.post('/add', auth, bodyParser(), post.addPost)
-router.del('/del/:id([0-9]{1,})', auth, post.deletePost)
+router.post('/add', bodyParser(), post.addPost)
+router.put('/update/:postId([0-9]{1,})', bodyParser(), post.updatePost)
+router.del('/del/:postId([0-9]{1,})', post.deletePost)
 
 module.exports = router;
