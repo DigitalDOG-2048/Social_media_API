@@ -7,9 +7,11 @@ const router = Router({ prefix: prefix });
 
 const post = require('../models/post');
 
+const {validateAddPost} = require('../controllers/validation');
+
 router.get('/get', post.getAllPost)
-router.post('/add', bodyParser(), post.addPost)
-router.put('/update/:postId([0-9]{1,})', bodyParser(), post.updatePost)
-router.del('/del/:postId([0-9]{1,})', post.deletePost)
+router.post('/add', bodyParser(), validateAddPost, post.addPost)
+router.put('/update/:postId([0-9]{1,})', auth, bodyParser(), post.updatePost)
+router.del('/del/:postId([0-9]{1,})', auth, post.deletePost)
 
 module.exports = router;

@@ -6,3 +6,7 @@ exports.config = {
   database: process.env.DB_DATABASE || "name of database",
   connection_limit:100
 }
+
+exports.Newsapikey = "Your key"
+
+exports.LocationApiKey = "Your key"

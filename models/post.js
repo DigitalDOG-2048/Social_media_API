@@ -3,7 +3,10 @@ const db = require('../helper/database')
 exports.getAllPost = async function getAllPost(ctx) {
     const query = "SELECT * FROM posts";
     const result = await db.sql_query(query);
-    ctx.body = result;
+    ctx.body = {
+        result,
+        Link: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
+    }
 }
 
 exports.addPost = async function addPost(ctx) {
@@ -12,9 +15,10 @@ exports.addPost = async function addPost(ctx) {
     const result = await db.sql_query(query, body)
     ctx.status = 200;
     ctx.body = {
-        ID: result.insertId,
+        ID: body.userId,
         Message: `Post has been created`,
         Post: body.description,
+        Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
     }
 }
 exports.updatePost = async function updatePost(ctx){
@@ -25,12 +29,15 @@ exports.updatePost = async function updatePost(ctx){
         await db.sql_query(query, [body, id])
         ctx.status = 200;
         ctx.body = {
-            Message: 'Post has been updated'
+            id: id,
+            Message: 'Post has been updated',
+            body,
+            Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
         }
     }catch(error){
         ctx.status = 500;
         ctx.body = {
-            Message: "could not update the post"
+            Message: "could not update the post",
         }
     }
 }
@@ -43,6 +50,8 @@ exports.deletePost = async function deletePost(ctx) {
     ctx.status = 500
     ctx.body = {
         id: id,
-        Message: `post has been deleted`
+        deleted: true,
+        Message: `post has been deleted`,
+        Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
     }
 }

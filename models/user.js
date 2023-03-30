@@ -16,7 +16,8 @@ exports.register = async function register(ctx) {
   if (checkUsernameExist(body.username).length) {
     ctx.status = 500;
     ctx.body = {
-      Message: `the username ${body.username} is already been used, please chooes a different one`
+      Message: `the username ${body.username} is already been used, please chooes a different one`,
+      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     }
   }
   else {
@@ -30,6 +31,7 @@ exports.register = async function register(ctx) {
     ctx.body = {
       ID: id,
       Message: `account has been created for user ${body.name} with username ${body.username}.`,
+      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     };
   }
 }
@@ -58,14 +60,16 @@ exports.login = async function login(ctx, next) {
         console.log(`Incorrect password entered for ${body.username}`)
         ctx.status = 400;
         ctx.body = {
-          Message: "Incorrect password."
+          Message: "Incorrect password.",
+          self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
         }
       }
     }
     else {
       ctx.status = 500;
       ctx.body = {
-        Message: `${body.username} does not exits, please check your username`
+        Message: `${body.username} does not exits, please check your username`,
+        self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
       };
     }
   }
@@ -73,7 +77,8 @@ exports.login = async function login(ctx, next) {
     console.error(error);
     ctx.status = 500;
     ctx.body = {
-      Message: "Something went wrong"
+      Message: "Something went wrong",
+      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     }
   }
   await next()
@@ -89,7 +94,8 @@ exports.getAllUser = async function getAllUser(ctx) {
     console.error(error);
     ctx.status = 500;
     ctx.body = {
-      Message: "Something went wrong."
+      Message: "Something went wrong.",
+      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     }
   }
 }
@@ -118,7 +124,8 @@ exports.update = async function update (ctx) {
     await db.sql_query(query, [body, id]);
     ctx.status = 201;
     ctx.body = {
-      Message: "You have update your account"
+      Message: "You have update your account",
+      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     };
   }catch(error){
     ctx.body = error;
@@ -132,10 +139,14 @@ exports.deleteUser = async function deleteUser (ctx){
     await db.sql_query(query, id)
     ctx.status = 200;
     ctx.body = {
-      Message: "Your have deleted your account"
+      Message: "Your have deleted your account",
+      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     }
   }catch(error){
-    ctx.body = error;
+    ctx.body = {
+      error,
+      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
+    }
   }
 }
 

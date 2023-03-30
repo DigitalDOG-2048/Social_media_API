@@ -4,7 +4,10 @@ exports.getComment = async function getComment(ctx) {
     const id = ctx.params.postId;
     const query = "SELECT * FROM comments WHERE postID = ?";
     const result = await db.sql_query(query, id);
-    ctx.body = result;
+    ctx.body = {
+        result,
+        self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
+    }
 
 }
 
@@ -21,6 +24,7 @@ exports.addComment = async function addComment(ctx) {
         ID: result.insertId,
         Message: `You have commnet on post ${postId}`,
         Comment: body.comment,
+        self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     }
 }
 
@@ -32,6 +36,7 @@ exports.delComment = async function delComment(ctx) {
     ctx.body = {
         id: id,
         Message: 'comment has been deleted',
+        self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     }
 }
 
@@ -45,12 +50,14 @@ exports.updateComment = async function updateComment(ctx) {
         ctx.status = 200;
         ctx.body = {
             Message: `You have update the comment with comment id:${id}`,
-            newComment: body
+            newComment: body,
+            self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
         }
     }catch(error){
         ctx.status = 500;
         ctx.body = {
-            Message: `can not update the comment with comment id:${id}`
+            Message: `can not update the comment with comment id:${id}`,
+            self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
         }
     }
 }

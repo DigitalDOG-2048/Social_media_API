@@ -8,10 +8,10 @@ const router =Router({prefix: prefix});
 const user = require('../models/user');
 
 router.get('/', user.getAllUser);
-router.post('/register', bodyParser(), user.register);
-router.post('/login', bodyParser(), user.login)
-router.post('/logout', user.logout)
-router.put('/update/:userId([0-9]{1,})', bodyParser(), user.update);
-router.del('/delete/:userId([0-9]{1,})', user.deleteUser)
+router.post('/register', auth, bodyParser(), user.register);
+router.post('/login', auth, bodyParser(), user.login)
+router.post('/logout', auth, user.logout)
+router.put('/update/:userId([0-9]{1,})', auth, bodyParser(), user.update);
+router.del('/delete/:userId([0-9]{1,})', auth, user.deleteUser)
 
 module.exports = router;
