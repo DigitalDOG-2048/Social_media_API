@@ -1,0 +1,125 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+
+        "post":{
+            "$id": "#post",
+            "title": "Post",
+            "description": "the post in the social media",
+            "type":"object",
+            "properties": {
+                "post":{
+                    "description": "the post details",
+                    "type":"string"
+                },
+                "userId":{
+                    "description": "the author id of the post",
+                    "type": "integer"
+                },
+                "date":{
+                    "description": "the creation date of the post",
+                    "type":"string",
+                    "format": "date"
+                }
+            }
+        },
+
+
+        "addPost":{
+            "$id": "#addpost",
+            "title": "add Post",
+            "description": "add new post to the social media",
+            "type": "object",
+            "properties": {
+                "post": {
+                    "description": "the information of what is been post",
+                    "type": "string"
+                }
+            },
+            "required": ["post"],
+            "additionalProperties": false
+        },
+
+        "addedPost":{
+            "$id": "#addedpost",
+            "title": "added post",
+            "description": "the information of data been add",
+            "type":"object",
+            "properties": {
+                "userId":{
+                    "description": "the id of the author",
+                    "type":"integer"
+                },
+                "post":{
+                    "description": "the detail of what is been post",
+                    "type":"string"
+                },
+                "Link":{
+                    "description": "a link to get all post after add new post",
+                    "type":"string",
+                    "format": "url"
+                }
+            }
+        },
+
+        "updatePost":{
+            "$id": "#updatePost",
+            "title": "Update post",
+            "description": "Confirmation of successful",
+            "type":"object",
+            "properties": {
+                "post":{
+                    "description": "the new of post",
+                    "type": "string"
+                }
+            },
+            "required":["post"],
+            "additionalProperties": false
+        },
+
+        "updatedPost":{
+            "$id": "updatedPost",
+            "title": "Updated Post",
+            "description": "Confirmation of successful",
+            "type": "object",
+            "properties": {
+                "id":{
+                    "description": "the id the post been update",
+                    "type":"integer"
+                },
+                "post":{
+                    "description": "the new post info",
+                    "type":"string"
+                },
+
+                "Link":{
+                    "description": "a link to get all post after edit a post",
+                    "type":"string",
+                    "format": "url"
+                }
+            }
+        },
+
+        "deletePost":{
+            "$id": "#deletePost",
+            "title": "Delete post",
+            "description": "Confirstion of successful",
+            "type":"object",
+            "properties": {
+                "id":{
+                    "description": "id of the post been deleted",
+                    "type":"integer"
+                },
+                "deleted": {
+                    "description": "Boolean indicator of success",
+                    "type":"boolean"
+                },
+                "Link":{
+                    "description": "a link to get all post after deleter a post",
+                    "type":"string",
+                    "format": "url"
+                }
+            }
+        }
+    }
+}
