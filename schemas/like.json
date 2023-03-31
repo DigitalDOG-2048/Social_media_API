@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "likes":{
+            "$id": "#likes",
+            "title": "Likes",
+            "description": "The number of likes for the post",
+            "type":"object",
+            "properties": {
+                "Likes": {
+                    "description": "the number of likes for the post",
+                    "type":"integer"
+                }
+            }
+        },
+
+        "addLike":{
+            "$id": "#addLike",
+            "title": "Add Like",
+            "description": "the comfirmation of success",
+            "type":"object",
+            "properties": {
+                "PostID":{
+                    "description": "the post that is been liked",
+                    "type": "integer"
+                },
+                "UserID":{
+                    "description": "the id of the user who likes the post",
+                    "type":"integer"
+                },
+                "Liked":{
+                    "description": "the boolean indicatore of success",
+                    "type":"boolean"
+                }
+            }
+        },
+
+        "disLike":{
+            "$id": "#disLike",
+            "title": "dislike",
+            "description": "the comfirmation of success",
+            "type":"object",
+            "properties": {
+                "PostID":{
+                    "description": "the post that is been disliked",
+                    "type": "integer"
+                },
+                "UserID":{
+                    "description": "the id of the user who dislikes the post",
+                    "type":"integer"
+                },
+                "disliked":{
+                    "description": "the boolean indicatore of success",
+                    "type":"boolean"
+                }
+            }
+        }
+    }
+}

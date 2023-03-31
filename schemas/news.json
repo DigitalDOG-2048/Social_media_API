@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "news":{
+            "$id": "#news",
+            "title": "News",
+            "description": "the live news or local news",
+            "type":"object",
+            "properties": {
+                "author":{
+                    "description": "the author of the news",
+                    "type":"string"
+                },
+                "title":{
+                    "description": "the title of the news",
+                    "type":"string"
+                },
+                "description":{
+                    "description": "the description of the news",
+                    "type":"string"
+                },
+                "url":{
+                    "description": "the url of the news",
+                    "type":"string",
+                    "format": "url"
+                },
+                "source":{
+                    "description": "the source of the news",
+                    "type":"string"
+                },
+                "image":{
+                    "description": "the image of the news",
+                    "type":"string",
+                    "format": "url"
+                },
+                "category":{
+                    "description": "the category of the news",
+                    "type":"string"
+                },
+                "language":{
+                    "description": " the language of the news",
+                    "type":"string"
+                },
+                "country":{
+                    "description": "the country of the news",
+                    "type":"string"
+                },
+                "published_at":{
+                    "description": "the date of news published",
+                    "type":"integer",
+                    "format": "date"
+                }
+            }
+        }
+    }
+}

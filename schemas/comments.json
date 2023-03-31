@@ -1,0 +1,85 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "comment": {
+            "$id": "#comment",
+            "title": "Comment",
+            "description": "The comment of a post",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "the id the the post",
+                    "type": "integer"
+                },
+                "comment": {
+                    "description": "the comment text",
+                    "type": "string"
+                },
+                "createDate": {
+                    "description": "the date and time of the comment",
+                    "type": "number",
+                    "format": "date"
+                },
+                "userID": {
+                    "description": "the user id who make the comment",
+                    "type": "integer"
+                },
+                "postID": {
+                    "description": "the post id for this comment is about"
+                }
+            }
+        },
+        "addComment": {
+            "$id": "#addComment",
+            "title": "Add Comment",
+            "description": "the text of comment been add",
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "description": "the text of the comment ",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "commnet"
+            ],
+            "additionalProperties": false
+        },
+        "addedComment": {
+            "$id": "#addedComment",
+            "title": "Added Comment",
+            "description": "the confirmation of the comment added",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "the id the comment",
+                    "type": "integer"
+                },
+                "postID": {
+                    "description": "the id of the post",
+                    "type": "integer"
+                },
+                "commnet": {
+                    "description": "the text of the comment",
+                    "type": "string"
+                }
+            }
+        },
+        "deletedComment": {
+            "$id": "#deletedComment",
+            "title": "Deleted Comment",
+            "description": "the confirmation of the comment deleted",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "id of the comment been deleted",
+                    "type": "integer"
+                },
+                "deleted": {
+                    "description": "Boolean indicator of success",
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}
