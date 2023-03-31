@@ -80,6 +80,19 @@
                     "type": "boolean"
                 }
             }
+        },
+        "updateComment": {
+            "$id": "#updateComment",
+            "title": "Update Comment",
+            "description": "the text of comment been add",
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "description": "the text of the comment ",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
         }
     }
 }

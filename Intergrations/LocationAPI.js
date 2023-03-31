@@ -14,7 +14,8 @@ exports.getCurrentLocation = async function getCurrentLocation(ctx) {
         //console.log(location.data);
 
         if (location) {
-            const { timezone, flag, currency, connection, ...result } = location.data
+            const { timezone, flag, currency, connection,city_geoname_id,region_iso_code,region_geoname_id,postal_code,country_code,country_geoname_id,
+                country_is_eu,continent,continent_code,continent_geoname_id,security, ...result } = location.data
             ctx.status = 200;
             ctx.body = {
                 result
