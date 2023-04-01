@@ -30,70 +30,68 @@
                 }
             }
         },
-        "login":{
+        "login": {
             "$id": "login",
             "title": "Login",
             "description": "the information required for login",
-            "type":"object",
+            "type": "object",
             "properties": {
-                "username":{
+                "username": {
                     "description": "the username of the account",
-                    "type":"string"
+                    "type": "string"
                 },
-                "password":{
+                "password": {
                     "description": "the passwor of the account",
-                    "type":"string"
+                    "type": "string"
                 }
             },
-            "required": ["username", "password"],
+            "required": [
+                "username",
+                "password"
+            ],
             "additionalProperties": false
         },
-
-        "loggedin":{
+        "loggedin": {
             "$id": "loggedin",
             "title": "Logged in",
             "description": "the confirmation of login",
-            "type":"object",
+            "type": "object",
             "properties": {
-                "id":{
+                "id": {
                     "description": "the id the user been logged in",
-                    "type":"integer"
+                    "type": "integer"
                 },
-                "name":{
+                "name": {
                     "description": "the name of the user been logged in",
-                    "type":"string"
+                    "type": "string"
                 },
-                "username":{
+                "username": {
                     "description": "the username of the user been logged in",
-                    "type":"string"
+                    "type": "string"
                 },
-                "email":{
+                "email": {
                     "description": "the email of the user been logged in",
-                    "type":"string",
+                    "type": "string",
                     "format": "email"
                 },
-                
-                "Login":{
+                "Login": {
                     "description": "Boolean indicator of success",
-                    "type":"boolean"
+                    "type": "boolean"
                 }
             }
         },
-
-
-        "logout":{
+        "logout": {
             "$id": "logout",
             "title": "logout",
             "description": "the confirmation of logout",
-            "type":"object",
+            "type": "object",
             "properties": {
-                "logout":{
+                "logout": {
                     "description": "Boolean indicator of success",
-                    "type":"boolean"
+                    "type": "boolean"
                 }
             }
         },
-
         "register": {
             "$id": "register",
             "title": "Register",
@@ -128,6 +126,35 @@
             ],
             "additionalProperties": false
         },
+
+        "registered": {
+            "$id": "registered",
+            "title": "Registered",
+            "description": "the confirmation of account created",
+            "type": "object",
+            "properties": {
+                "id":{
+                    "description": "the id of the user",
+                    "type":"string"
+                },
+
+                "name": {
+                    "description": "the name of the user",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "the email of the user",
+                    "type": "string",
+                    "format": "email"
+                },
+                "username": {
+                    "description": "the username of the acccount",
+                    "type": "string",
+                    "minLength": 4
+                }
+            }
+        },
+        
         "userUpdate": {
             "$id": "#userUpdate",
             "title": "User Update",

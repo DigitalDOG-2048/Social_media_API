@@ -19,7 +19,7 @@ exports.getLiveNews = async function getLiveNews(ctx) {
             }
         }
     } catch (error) {
-        ctx.status = 400;
+        ctx.status = 500;
         ctx.body = {
             Message: "Something went wrong, please try again",
             Error: error
@@ -48,7 +48,7 @@ exports.getLocalNews = async function getlocalNews(ctx) {
         }
 
     } catch (error) {
-        ctx.status = 400;
+        ctx.status = 500;
         ctx.body = {
             Message: "Something went wrong, please try again",
             Error: error

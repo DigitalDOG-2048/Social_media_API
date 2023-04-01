@@ -22,14 +22,17 @@ exports.register = async function register(ctx) {
   }
   else {
     const query = "INSERT INTO users SET ?";
-    const password = body.password;
-    body.password = bcrypt.hashSync(password, 10);
+    const hashpassword = body.password;
+    body.password = bcrypt.hashSync(hashpassword, 10);
     const result = await db.sql_query(query, body);
     const id = result.insertId;
+
+    const {password,...user} = body;
     console.log(`New account has been created.`)
     ctx.status = 200;
     ctx.body = {
       ID: id,
+      user,
       Message: `account has been created for user ${body.name} with username ${body.username}.`,
       self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     };
@@ -66,7 +69,7 @@ exports.login = async function login(ctx, next) {
       }
     }
     else {
-      ctx.status = 404;
+      ctx.status = 400;
       ctx.body = {
         Message: `${body.username} does not exits, please check your username`,
         self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
@@ -88,6 +91,7 @@ exports.getAllUser = async function getAllUser(ctx) {
   try {
     const query = "SELECT id,name, username, email, role FROM users";
     const result = await db.sql_query(query);
+    ctx.status = 200
     ctx.body = result
   }
   catch (error) {

@@ -1,4 +1,3 @@
-const bodyParser = require('koa-bodyparser');
 const db = require('../helper/database')
 
 exports.getComment = async function getComment(ctx) {
@@ -38,7 +37,7 @@ exports.addComment = async function addComment(ctx) {
       const result = await db.sql_query(query, body);
   
       if (result.affectedRows > 0) {
-        ctx.status = 201;
+        ctx.status = 200;
         ctx.body = {
           id: result.insertId,
           postID: postId,

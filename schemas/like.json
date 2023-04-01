@@ -29,7 +29,7 @@
                     "type":"integer"
                 },
                 "Liked":{
-                    "description": "the boolean indicatore of success",
+                    "description": "the boolean indicator of success",
                     "type":"boolean"
                 }
             }
@@ -50,7 +50,7 @@
                     "type":"integer"
                 },
                 "disliked":{
-                    "description": "the boolean indicatore of success",
+                    "description": "the boolean indicator of success",
                     "type":"boolean"
                 }
             }

@@ -84,7 +84,7 @@
         "updateComment": {
             "$id": "#updateComment",
             "title": "Update Comment",
-            "description": "the text of comment been add",
+            "description": "the text of comment",
             "type": "object",
             "properties": {
                 "comment": {
@@ -92,7 +92,22 @@
                     "type": "string"
                 }
             },
+            "required": [
+                "comment"
+            ],
             "additionalProperties": false
+        },
+        "updatedComment": {
+            "$id": "#updatedComment",
+            "title": "Updated Comment",
+            "description": "the text of comment",
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "description": "the text of the comment ",
+                    "type": "string"
+                }
+            }
         }
     }
 }

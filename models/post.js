@@ -3,6 +3,7 @@ const db = require('../helper/database')
 exports.getAllPost = async function getAllPost(ctx) {
     const query = "SELECT * FROM posts";
     const result = await db.sql_query(query);
+    ctx.status = 200;
     ctx.body = {
         result,
         Link: `${ctx.protocol}://${ctx.host}${ctx.request.path}`

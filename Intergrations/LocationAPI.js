@@ -22,7 +22,7 @@ exports.getCurrentLocation = async function getCurrentLocation(ctx) {
             }
         }
     } catch (error) {
-        ctx.status = 400;
+        ctx.status = 500;
         ctx.body = {
             Message: "Something went wrong, please try again",
             Error: error

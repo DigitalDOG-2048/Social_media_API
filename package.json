@@ -31,5 +31,8 @@
     "promise-mysql": "^5.2.0",
     "role-acl": "^4.5.4",
     "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.2"
   }
 }
