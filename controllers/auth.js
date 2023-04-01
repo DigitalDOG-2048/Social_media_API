@@ -1,5 +1,15 @@
+/**
+ * @module controllers/auth
+ * @author Longhui Huang
+ */
+
 const jwt = require('jsonwebtoken');
 
+/**
+ * 
+ * @param {object} ctx 
+ * @param {function} next 
+ */
 const auth = async (ctx, next) => {
     const token = ctx.cookies.get("Token")
     try {

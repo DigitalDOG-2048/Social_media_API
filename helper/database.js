@@ -1,5 +1,19 @@
+/**
+ * @module helper/database
+ * @author Longhui Huang
+ * @see models
+ */
+
 const mysql = require('promise-mysql');
 const info = require('../config');
+
+/**
+ * 
+ * @param {string} query 
+ * @param {Array|number|string} values 
+ * @returns {object}
+ */
+
 
 exports.sql_query = async function sql_query(query, values) {
   try {

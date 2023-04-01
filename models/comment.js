@@ -6,6 +6,7 @@ exports.getComment = async function getComment(ctx) {
     try {
         const result = await db.sql_query(query, id);
         if (result.length) {
+            console.log(`Success get commnet for post ${id}`);
             ctx.status = 200,
                 ctx.body = {
                     result,
@@ -37,6 +38,7 @@ exports.addComment = async function addComment(ctx) {
       const result = await db.sql_query(query, body);
   
       if (result.affectedRows > 0) {
+        console.log(`user ${userId} try to add new comment to post ${postId}`);
         ctx.status = 200;
         ctx.body = {
           id: result.insertId,
@@ -45,6 +47,7 @@ exports.addComment = async function addComment(ctx) {
           comment,
         };
       } else {
+        console.error(`Post not found`);
         ctx.status = 404;
         ctx.body = {
           message: 'Post not found',
@@ -65,6 +68,7 @@ exports.delComment = async function delComment(ctx) {
     try {
         const result = await db.sql_query(query, id);
         if (result.affectedRows > 0) {
+            console.log(`comment ${id} has been deleted`);
             ctx.status = 200;
             ctx.body = {
                 id: id,
@@ -93,6 +97,7 @@ exports.updateComment = async function updateComment(ctx) {
     console.log(body);
     try {
         await db.sql_query(query, [body, id]);
+        console.log(`commnet ${id} has been update, new comment: ${body}`);
         ctx.status = 200;
         ctx.body = {
             Message: `You have update the comment with comment id:${id}`,
