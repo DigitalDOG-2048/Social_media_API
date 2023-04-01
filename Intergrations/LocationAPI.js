@@ -1,6 +1,8 @@
 const axios = require('axios');
 const { LocationApiKey } = require('../config')
 
+
+
 exports.getCurrentLocation = async function getCurrentLocation(ctx) {
     const ip = ctx.params.ip_address;
     const url = `https://ipgeolocation.abstractapi.com/v1/?api_key=${LocationApiKey}&ip_address=${ip} `
