@@ -10,22 +10,31 @@ exports.getAllPost = async function getAllPost(ctx) {
 }
 
 exports.addPost = async function addPost(ctx) {
+    const userId = ctx.params.userId
+    Object.assign(ctx.request.body, {userId })
     const body = ctx.request.body;
     const query = "INSERT INTO posts SET ?"
-    const result = await db.sql_query(query, body)
-    ctx.status = 200;
-    ctx.body = {
-        ID: body.userId,
-        Message: `Post has been created`,
-        Post: body.description,
-        Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
+    try {
+        const result = await db.sql_query(query, body)
+        ctx.status = 200;
+        ctx.body = {
+            ID: body.userId,
+            Message: `Post has been created`,
+            Post: body.description,
+            Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = {
+            Message: "unable to add post."
+        }
     }
 }
-exports.updatePost = async function updatePost(ctx){
+exports.updatePost = async function updatePost(ctx) {
     const id = ctx.params.postId;
     const body = ctx.request.body;
     const query = "UPDATE posts SET? WHERE id = ?"
-    try{
+    try {
         await db.sql_query(query, [body, id])
         ctx.status = 200;
         ctx.body = {
@@ -34,10 +43,10 @@ exports.updatePost = async function updatePost(ctx){
             body,
             Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
         }
-    }catch(error){
+    } catch (error) {
         ctx.status = 500;
         ctx.body = {
-            Message: "could not update the post",
+            Message: "unable to update the post",
         }
     }
 }
@@ -46,12 +55,20 @@ exports.updatePost = async function updatePost(ctx){
 exports.deletePost = async function deletePost(ctx) {
     const id = ctx.params.postId;
     const query = "DELETE FROM posts WHERE id = ?";
-    await db.sql_query(query, id);
-    ctx.status = 500
-    ctx.body = {
-        id: id,
-        deleted: true,
-        Message: `post has been deleted`,
-        Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
+
+    try {
+        await db.sql_query(query, id);
+        ctx.status = 200
+        ctx.body = {
+            id: id,
+            deleted: true,
+            Message: `post has been deleted`,
+            Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
+        }
+    } catch (error) {
+        ctx.status = 500
+        ctx.body = {
+            Message: "unable to delete the post"
+        }
     }
 }

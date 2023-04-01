@@ -10,8 +10,8 @@ const comment = require('../models/comment');
 const {validateAddComment, validateUpdateComment} = require('../controllers/validation')
 
 router.get('/get/:postId([0-9]{1,})', comment.getComment)
-router.post('/:userId([0-9]{1,})/add/:postId([0-9]{1,})', bodyParser(), validateAddComment, comment.addComment)
-router.put('/update/:commentId([0-9]{1,})', bodyParser(), validateUpdateComment, comment.updateComment)
-router.del('/del/:id([0-9]{1,})', comment.delComment)
+router.post('/:userId([0-9]{1,})/add/:postId([0-9]{1,})', auth, bodyParser(), validateAddComment, comment.addComment)
+router.put('/update/:commentId([0-9]{1,})', bodyParser(), auth, validateUpdateComment, comment.updateComment)
+router.del('/del/:id([0-9]{1,})', auth, comment.delComment)
 
 module.exports = router;

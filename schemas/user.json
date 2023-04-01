@@ -112,7 +112,7 @@
                 "username": {
                     "description": "the username of the acccount",
                     "type": "string",
-                    "minLength": 6
+                    "minLength": 4
                 },
                 "password": {
                     "description": "the password of the account",
@@ -146,7 +146,7 @@
                 "username": {
                     "description": "the username of the acccount",
                     "type": "string",
-                    "minLength": 6
+                    "minLength": 4
                 },
                 "password": {
                     "description": "the password of the account",

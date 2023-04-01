@@ -5,6 +5,6 @@ const auth = require('../controllers/auth')
 const prefix = '/api/v1/location'
 const router = Router({ prefix: prefix });
 
-router.get('/:ip_address', location.getCurrentLocation)
+router.get('/:ip_address', auth, location.getCurrentLocation)
 
 module.exports = router;

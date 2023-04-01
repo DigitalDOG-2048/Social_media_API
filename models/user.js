@@ -27,7 +27,7 @@ exports.register = async function register(ctx) {
     const result = await db.sql_query(query, body);
     const id = result.insertId;
     console.log(`New account has been created.`)
-    ctx.status = 201;
+    ctx.status = 200;
     ctx.body = {
       ID: id,
       Message: `account has been created for user ${body.name} with username ${body.username}.`,
@@ -50,11 +50,11 @@ exports.login = async function login(ctx, next) {
         const links = `${ctx.protocol}://${ctx.host}${ctx.request.path}/${id}`
         const token = jwt.sign({ ID: result[0].id }, "secretkey", { expiresIn: '1d' })
         console.log(`Successfully authenticated user ${body.username}. token issused`,)
-        const { password,registeredDate,modifiedDate, ...user} = result[0]
+        const { password, registeredDate, modifiedDate, ...user } = result[0]
         ctx.cookies.set("Token", token, { httpOnly: true });
         //console.log(ctx.cookies.get("Token"))
         ctx.status = 200;
-        ctx.body = {user, self:links}
+        ctx.body = { user, self: links }
       }
       else {
         console.log(`Incorrect password entered for ${body.username}`)
@@ -66,7 +66,7 @@ exports.login = async function login(ctx, next) {
       }
     }
     else {
-      ctx.status = 500;
+      ctx.status = 404;
       ctx.body = {
         Message: `${body.username} does not exits, please check your username`,
         self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
@@ -86,9 +86,9 @@ exports.login = async function login(ctx, next) {
 
 exports.getAllUser = async function getAllUser(ctx) {
   try {
-    const query = "SELECT * FROM users";
+    const query = "SELECT id,name, username, email, role FROM users";
     const result = await db.sql_query(query);
-    ctx.body = result;
+    ctx.body = result
   }
   catch (error) {
     console.error(error);
@@ -103,49 +103,53 @@ exports.getAllUser = async function getAllUser(ctx) {
 
 exports.logout = async function logout(ctx) {
   ctx.cookies.set("Token", '', { httpOnly: false });
-  ctx.status = 204;
+  ctx.status = 200;
   ctx.body = {
+    Logout: true,
     Message: "You have logged out"
   }
 
 }
 
-exports.update = async function update (ctx) {
+exports.update = async function update(ctx) {
   const body = ctx.request.body;
   const id = ctx.params.userId;
   const query = "UPDATE users SET ? WHERE ID = ?;";
 
-  if (ctx.password) {
-    const password = user.password;
+  if (body.password) {
+    const password = body.password;
     const hash = bcrypt.hashSync(password, 10);
-    user.password = hash;  
+    body.password = hash;
   }
-  try{
+  try {
     await db.sql_query(query, [body, id]);
-    ctx.status = 201;
+    ctx.status = 200;
     ctx.body = {
+      ID: id,
+      Updated: true,
       Message: "You have update your account",
-      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     };
-  }catch(error){
+  } catch (error) {
+    ctx.status = 500;
     ctx.body = error;
   };
 };
 
-exports.deleteUser = async function deleteUser (ctx){
+exports.deleteUser = async function deleteUser(ctx) {
   const id = ctx.params.userId;
   const query = "DELETE FROM users WHERE id = ?";
-  try{
+  try {
     await db.sql_query(query, id)
     ctx.status = 200;
     ctx.body = {
+      ID: id,
+      Deleted: true,
       Message: "Your have deleted your account",
-      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     }
-  }catch(error){
+  } catch (error) {
+    ctx.status = 500;
     ctx.body = {
       error,
-      self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     }
   }
 }

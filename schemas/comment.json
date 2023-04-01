@@ -41,7 +41,7 @@
                 }
             },
             "required": [
-                "commnet"
+                "comment"
             ],
             "additionalProperties": false
         },
@@ -59,7 +59,7 @@
                     "description": "the id of the post",
                     "type": "integer"
                 },
-                "commnet": {
+                "comment": {
                     "description": "the text of the comment",
                     "type": "string"
                 }
