@@ -39,7 +39,7 @@ exports.addComment = async function addComment(ctx) {
   
       if (result.affectedRows > 0) {
         console.log(`user ${userId} try to add new comment to post ${postId}`);
-        ctx.status = 200;
+        ctx.status = 201;
         ctx.body = {
           id: result.insertId,
           postID: postId,
@@ -100,6 +100,7 @@ exports.updateComment = async function updateComment(ctx) {
         console.log(`commnet ${id} has been update, new comment: ${body}`);
         ctx.status = 200;
         ctx.body = {
+            updated: true,
             Message: `You have update the comment with comment id:${id}`,
             newComment: body,
             //self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`

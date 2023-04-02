@@ -16,12 +16,12 @@ exports.addPost = async function addPost(ctx) {
     const body = ctx.request.body;
     const query = "INSERT INTO posts SET ?"
     try {
-        const result = await db.sql_query(query, body)
-        ctx.status = 200;
+        await db.sql_query(query, body)
+        ctx.status = 201;
         ctx.body = {
-            ID: body.userId,
+            userId: body.userId,
             Message: `Post has been created`,
-            Post: body.description,
+            Post: body.post,
             Link: "http://activeprize-cameraphantom-3000.codio-box.uk/api/v1/post/get"
         }
     } catch (error) {

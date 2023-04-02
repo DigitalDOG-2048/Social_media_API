@@ -151,6 +151,10 @@
                     "description": "the username of the acccount",
                     "type": "string",
                     "minLength": 4
+                },
+                "registered":{
+                    "description": "Boolean indicator of success",
+                    "type":"boolean"
                 }
             }
         },

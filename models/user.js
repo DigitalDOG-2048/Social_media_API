@@ -13,8 +13,10 @@ const checkUsernameExist = async function (username) {
 
 exports.register = async function register(ctx) {
   const body = ctx.request.body;
-  if (checkUsernameExist(body.username).length) {
-    ctx.status = 500;
+  const exist = await checkUsernameExist(body.username)
+  console.log(exist);
+  if (exist.length) {
+    ctx.status = 409;
     ctx.body = {
       Message: `the username ${body.username} is already been used, please chooes a different one`,
       self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
@@ -26,13 +28,13 @@ exports.register = async function register(ctx) {
     body.password = bcrypt.hashSync(hashpassword, 10);
     const result = await db.sql_query(query, body);
     const id = result.insertId;
-
-    const {password,...user} = body;
+    const { password, ...user } = body;
     console.log(`New account has been created.`)
-    ctx.status = 200;
+    ctx.status = 201;
     ctx.body = {
       ID: id,
       user,
+      registered: true,
       Message: `account has been created for user ${body.name} with username ${body.username}.`,
       self: `${ctx.protocol}://${ctx.host}${ctx.request.path}`
     };
@@ -57,7 +59,7 @@ exports.login = async function login(ctx, next) {
         ctx.cookies.set("Token", token, { httpOnly: true });
         //console.log(ctx.cookies.get("Token"))
         ctx.status = 200;
-        ctx.body = { user, self: links }
+        ctx.body = { id: id, user, Login: true, self: links }
       }
       else {
         console.log(`Incorrect password entered for ${body.username}`)
@@ -136,7 +138,7 @@ exports.update = async function update(ctx) {
   } catch (error) {
     ctx.status = 500;
     ctx.body = error;
-  };
+  }
 };
 
 exports.deleteUser = async function deleteUser(ctx) {

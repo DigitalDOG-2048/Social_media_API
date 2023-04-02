@@ -65,13 +65,13 @@ paths:
             schema:
               $ref: ./user.json#/definitions/register
       responses:
-        '200':
+        '201':
           description: account created
           content:
             application/json:
               schema:
                 $ref: ./user.json#/definitions/registered
-        '500':
+        '409':
           description: the username is already exist.
   
   /user/login:
@@ -149,7 +149,14 @@ paths:
         '500':
           description: something went wrong
 
-  /user/delete:
+  /user/delete/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: interger
+        required: true
+        description: numeric id of the user
     summary: to delete a account
     description: >
       delete a account
@@ -208,7 +215,7 @@ paths:
             schema:
               $ref: ./post.json#/definitions/addPost
       responses:
-        '200':
+        '201':
           description: success added
           content:
             application/json:
@@ -295,7 +302,7 @@ paths:
           '500':
             description: Something went wrong
 
-  /comment/{userID}/add{postID}:
+  /comment/{userID}/add/{postID}:
       parameters:
         - in: path
           name: userID
@@ -322,7 +329,7 @@ paths:
               schema:
                 $ref: ./comment.json#/definitions/addComment
         responses:
-          '200':
+          '201':
             description: list of the comments
             content:
               application/json:
@@ -433,7 +440,7 @@ paths:
         description:
           Add like
         responses:
-          '200':
+          '201':
             description: user likes a post
             content:
               application/json:
@@ -458,7 +465,7 @@ paths:
             type: interger
           required: true
           description: the id of the post
-      post:
+      delete:
         tags:
           - Likes
         description:
