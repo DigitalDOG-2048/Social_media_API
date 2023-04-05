@@ -53,13 +53,13 @@ exports.login = async function login(ctx, next) {
         const id = result[0].id;
         //console.log(ctx.state.userid);
         const links = `${ctx.protocol}://${ctx.host}${ctx.request.path}/${id}`
-        const token = jwt.sign({ ID: result[0].id }, "secretkey", { expiresIn: '1d' })
+        const token = jwt.sign({}, "secretkey", { expiresIn: '1d' })
         console.log(`Successfully authenticated user ${body.username}. token issused`,)
         const { password, registeredDate, modifiedDate, ...user } = result[0]
         ctx.cookies.set("Token", token, { httpOnly: true });
         //console.log(ctx.cookies.get("Token"))
         ctx.status = 200;
-        ctx.body = { id: id, user, Login: true, self: links }
+        ctx.body = { id: id, user, Login: true, self: links, token:token }
       }
       else {
         console.log(`Incorrect password entered for ${body.username}`)

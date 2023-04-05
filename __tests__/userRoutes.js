@@ -1,11 +1,14 @@
 const request = require('supertest')
 const app = require('../app')
+const jwt = require('jsonwebtoken');
+const token = jwt.sign({}, "secretkey", { expiresIn: '1d' })
+const Token = `Token=${token}`
 
 describe('User', () => {
   it('should able to get all users', async () => {
     const res = await request(app.callback())
       .get('/api/v1/user/get')
-      .set("Cookie", "Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiaWF0IjoxNjgwNDIwODUyLCJleHAiOjE2ODA1MDcyNTJ9.FrK5fYl6tmwbaxhJP8IYepUit5Z7V8F9p2ESQYEcpLw")
+      .set("Cookie", Token)
     expect(res.statusCode).toEqual(200)
   })
   it('should failed to get all users', async () => {
@@ -81,7 +84,7 @@ describe('Logout', () => {
   it('allow user to logout', async () => {
     const res = await request(app.callback())
       .post('/api/v1/user/logout')
-      .set("Cookie", "Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiaWF0IjoxNjgwNDIwODUyLCJleHAiOjE2ODA1MDcyNTJ9.FrK5fYl6tmwbaxhJP8IYepUit5Z7V8F9p2ESQYEcpLw")
+      .set("Cookie", Token)
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty('Logout', true)
   })
@@ -91,7 +94,7 @@ describe('Update', () => {
   it('allow user to update', async () => {
     const res = await request(app.callback())
       .put('/api/v1/user/update/2')
-      .set("Cookie", "Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiaWF0IjoxNjgwNDIwODUyLCJleHAiOjE2ODA1MDcyNTJ9.FrK5fYl6tmwbaxhJP8IYepUit5Z7V8F9p2ESQYEcpLw")
+      .set("Cookie", Token)
       .send({
         password: 'test_12345'
       })
@@ -113,7 +116,7 @@ describe('Delete', () => {
   it('allow user to delete account', async () => {
     const res = await request(app.callback())
       .del('/api/v1/user/delete/2')
-      .set("Cookie", "Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiaWF0IjoxNjgwNDIwODUyLCJleHAiOjE2ODA1MDcyNTJ9.FrK5fYl6tmwbaxhJP8IYepUit5Z7V8F9p2ESQYEcpLw")
+      .set("Cookie", Token)
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty('Deleted', true)
   })

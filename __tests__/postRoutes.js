@@ -1,5 +1,9 @@
 const request = require('supertest')
 const app = require('../app')
+const jwt = require('jsonwebtoken');
+const token = jwt.sign({}, "secretkey", { expiresIn: '1d' })
+const Token = `Token=${token}`
+
 
 describe('Posts', () => {
     it('this should get all posts', async () => {
@@ -14,7 +18,7 @@ describe('add post', () => {
     it('this should allow user to add post', async () => {
         const res = await request(app.callback())
             .post('/api/v1/post/add/1')
-            .set("Cookie", "Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiaWF0IjoxNjgwNDIwODUyLCJleHAiOjE2ODA1MDcyNTJ9.FrK5fYl6tmwbaxhJP8IYepUit5Z7V8F9p2ESQYEcpLw")
+            .set("Cookie", Token)
             .send({
                 post: 'test post'
             })
@@ -36,7 +40,7 @@ describe('update post', () => {
     it('this should allow user to update post', async () => {
         const res = await request(app.callback())
             .put('/api/v1/post/update/6')
-            .set("Cookie", "Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiaWF0IjoxNjgwNDIwODUyLCJleHAiOjE2ODA1MDcyNTJ9.FrK5fYl6tmwbaxhJP8IYepUit5Z7V8F9p2ESQYEcpLw")
+            .set("Cookie", Token)
             .send({
                 post: 'test post'
             })
@@ -58,8 +62,8 @@ describe('delete post', () => {
     it('this should allow user to delete post', async () => {
         const res = await request(app.callback())
             .del('/api/v1/post/del/6')
-            .set("Cookie", "Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiaWF0IjoxNjgwNDIwODUyLCJleHAiOjE2ODA1MDcyNTJ9.FrK5fYl6tmwbaxhJP8IYepUit5Z7V8F9p2ESQYEcpLw")
-        expect(res.statusCode).toEqual(200)
+            .set("Cookie", Token)
+            expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('id')
         expect(res.body).toHaveProperty('deleted', true)
     })
