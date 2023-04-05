@@ -10,7 +10,6 @@ describe('Posts', () => {
         const res = await request(app.callback())
             .get('/api/v1/post/get')
         expect(res.statusCode).toEqual(200)
-        
     })
 })
 

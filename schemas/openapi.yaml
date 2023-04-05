@@ -118,6 +118,8 @@ paths:
             application/json:
               schema:
                 $ref: ./user.json#/definitions/logout
+        '401':
+          description: Unauthorised request
 
   /user/update/{id}:
     parameters:
@@ -146,6 +148,8 @@ paths:
             application/json:
               schema:
                 $ref: ./user.json#/definitions/userUpdated
+        '401':
+          description: Unauthorised request
         '500':
           description: something went wrong
 
@@ -172,6 +176,8 @@ paths:
             application/json:
               schema:
                 $ref: ./user.json#/definitions/userDeleted
+        '401':
+          description: Unauthorised request
         '500':
           description: something went wrong
 
@@ -221,6 +227,8 @@ paths:
             application/json:
               schema:
                 $ref: ./post.json#/definitions/addedPost
+        '401':
+          description: Unauthorised request
         '500':
           description: unable to add post
 
@@ -246,11 +254,13 @@ paths:
                 $ref: ./post.json#/definitions/updatePost
         responses:
           '200':
-            description: success added
+            description: success updated
             content:
               application/json:
                 schema:
                   $ref: ./post.json#/definitions/updatedPost
+          '401':
+            description: Unauthorised request
           '500':
             description: unable to update the post
 
@@ -274,6 +284,8 @@ paths:
               application/json:
                 schema:
                   $ref: ./post.json#/definitions/deletePost
+          '401':
+            description: Unauthorised request
           '500':
             description: unable to delete the post
 
@@ -330,11 +342,13 @@ paths:
                 $ref: ./comment.json#/definitions/addComment
         responses:
           '201':
-            description: list of the comments
+            description: success added comment
             content:
               application/json:
                 schema:
                   $ref: ./comment.json#/definitions/addedComment
+          '401':
+            description: Unauthorised request
           "404":
             description: Post not found
           '500':
@@ -368,6 +382,8 @@ paths:
               application/json:
                 schema:
                   $ref: ./comment.json#/definitions/updatedComment
+          '401':
+            description: Unauthorised request
           '500':
             description: can not edite the comment
 
@@ -392,6 +408,8 @@ paths:
               application/json:
                 schema:
                   $ref: ./comment.json#/definitions/deletedComment
+          '401':
+            description: Unauthorised request
           '500':
             description: comment not found or already deleted
 
@@ -441,13 +459,15 @@ paths:
           Add like
         responses:
           '201':
-            description: user likes a post
+            description: user likes the post
             content:
               application/json:
                 schema:
                   $ref: ./like.json#/definitions/addLike
           "400":
             description: Already like the post
+          '401':
+            description: Unauthorised request
           '500':
             description: Something went wrong
 
@@ -477,6 +497,8 @@ paths:
               application/json:
                 schema:
                   $ref: ./like.json#/definitions/disLike
+          '401':
+            description: Unauthorised request
           '500':
             description: Something went wrong
 
@@ -500,6 +522,8 @@ paths:
               application/json:
                 schema:
                   $ref: ./location.json#/definitions/location
+          '401':
+            description: Unauthorised request
           '500':
             description: something went wrong, please try again
 
@@ -516,6 +540,8 @@ paths:
               application/json:
                 schema:
                   $ref: ./news.json#/definitions/news
+          '401':
+            description: Unauthorised request
           '500':
             description: something went wrong, please try again
 
@@ -539,5 +565,7 @@ paths:
             application/json:
               schema:
                 $ref: ./news.json#/definitions/news
+        '401':
+          description: Unauthorised request
         '500':
           description: something went wrong, please try again

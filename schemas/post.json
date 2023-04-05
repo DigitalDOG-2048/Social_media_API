@@ -7,6 +7,10 @@
             "description": "the post in the social media",
             "type": "object",
             "properties": {
+                "id": {
+                    "description": "the id of the post",
+                    "type": "integer"
+                },
                 "post": {
                     "description": "the post details",
                     "type": "string"

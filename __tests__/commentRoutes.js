@@ -9,14 +9,7 @@ describe('get commnet', () => {
     it('this should get all comments', async () => {
         const res = await request(app.callback())
             .get('/api/v1/comment/get/1')
-            .set("Cookie", Token)
         expect(res.statusCode).toEqual(200)
-    })
-    it('this should failed to get all comments', async () => {
-        const res = await request(app.callback())
-            .get('/api/v1/comment/get/10')
-            .set("Cookie", Token)
-        expect(res.statusCode).toEqual(404)
     })
     it('this should failed to get all comments', async () => {
         const res = await request(app.callback())
